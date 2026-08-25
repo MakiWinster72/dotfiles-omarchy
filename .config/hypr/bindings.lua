@@ -30,6 +30,8 @@ o.bind("ALT + SPACE", "Omarchy menu", "omarchy-menu toggle")
 -- SUPER + SHIFT + A 原功能：打开 ChatGPT。
 -- SUPER + SHIFT + D 原功能：打开 Docker。
 -- SUPER + SHIFT + ALT + A 原功能：打开 Grok 网页应用。
+-- SUPER + F 原功能：真正全屏。
+-- SUPER + SHIFT + F 原功能：打开文件管理器。
 hl.unbind("SUPER + T")
 hl.unbind("SUPER + O")
 hl.unbind("SUPER + W")
@@ -43,6 +45,8 @@ hl.unbind("SUPER + SHIFT + TAB")
 hl.unbind("SUPER + SHIFT + A")
 hl.unbind("SUPER + SHIFT + D")
 hl.unbind("SUPER + SHIFT + ALT + A")
+hl.unbind("SUPER + F")
+hl.unbind("SUPER + SHIFT + F")
 
 o.bind("SUPER + T", "Terminal", { omarchy = "terminal" })
 o.bind("SUPER + Q", "Close window", hl.dsp.window.close())
@@ -53,6 +57,8 @@ o.bind("SUPER + Y", "Telegram", { launch = "telegram-desktop" })
 o.bind("SUPER + Z", "Clash Verge", { launch = "clash-verge", focus = "^clash-verge$" })
 o.bind("SUPER + ALT + L", "Lock system", "omarchy-system-lock")
 o.bind("SUPER + M", "切换工作区布局", "omarchy-hyprland-workspace-layout-toggle")
+o.bind("SUPER + F", "最大化窗口", hl.dsp.window.fullscreen({ mode = "maximized" }))
+o.bind("SUPER + SHIFT + F", "全屏窗口", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 o.bind("SUPER + TAB", "切换到上一个工作区", hl.dsp.focus({ workspace = "e-1" }))
 o.bind("SUPER + SHIFT + TAB", "工作区总览", "pkill -SIGUSR1 hyprexpose")
 
@@ -158,6 +164,12 @@ o.bind("SUPER + CTRL + D", "聚焦右侧显示器", hl.dsp.focus({ monitor = "r"
 o.bind("SUPER + CTRL + L", "聚焦右侧显示器", hl.dsp.focus({ monitor = "r" }))
 o.bind("SUPER + CTRL + K", "聚焦上方显示器", hl.dsp.focus({ monitor = "u" }))
 o.bind("SUPER + CTRL + J", "聚焦下方显示器", hl.dsp.focus({ monitor = "d" }))
+
+-- 将当前窗口移动到相邻显示器，并跟随窗口切换过去。
+o.bind("SUPER + SHIFT + CTRL + H", "移动窗口到左侧显示器", hl.dsp.window.move({ monitor = "l" }))
+o.bind("SUPER + SHIFT + CTRL + L", "移动窗口到右侧显示器", hl.dsp.window.move({ monitor = "r" }))
+o.bind("SUPER + SHIFT + CTRL + K", "移动窗口到上方显示器", hl.dsp.window.move({ monitor = "u" }))
+o.bind("SUPER + SHIFT + CTRL + J", "移动窗口到下方显示器", hl.dsp.window.move({ monitor = "d" }))
 
 -- 按住 SUPER 转动键盘音量滚轮，调节屏幕亮度。
 o.bind("SUPER + XF86AudioRaiseVolume", "提高屏幕亮度", "omarchy-brightness-display +10%", { locked = true, repeating = true })

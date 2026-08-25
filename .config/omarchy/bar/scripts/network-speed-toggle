@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -u
+
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+state_file="$runtime_dir/omarchy-network-speed.state"
+pause_file="$runtime_dir/omarchy-network-speed.paused"
+
+if [[ -e "$pause_file" ]]; then
+  rm -f "$pause_file" "$state_file"
+else
+  : > "$pause_file"
+fi

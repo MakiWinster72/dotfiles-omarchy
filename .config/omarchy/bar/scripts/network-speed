@@ -1,0 +1,65 @@
+#!/usr/bin/env bash
+set -u
+
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+state_file="$runtime_dir/omarchy-network-speed.state"
+pause_file="$runtime_dir/omarchy-network-speed.paused"
+
+format_rate() {
+  local bytes_per_second=$1
+  if (( bytes_per_second >= 1073741824 )); then
+    awk -v n="$bytes_per_second" 'BEGIN { printf "%.1f GB/s", n / 1073741824 }'
+  elif (( bytes_per_second >= 1048576 )); then
+    awk -v n="$bytes_per_second" 'BEGIN { printf "%.1f MB/s", n / 1048576 }'
+  elif (( bytes_per_second >= 1024 )); then
+    awk -v n="$bytes_per_second" 'BEGIN { printf "%.1f KB/s", n / 1024 }'
+  else
+    printf '%d B/s' "$bytes_per_second"
+  fi
+}
+
+if [[ -e "$pause_file" ]]; then
+  printf '{"text":"↓ --  ↑ --","tooltip":"网络速率检测已暂停 · 点击继续","class":"paused"}\n'
+  exit 0
+fi
+
+read -r rx_bytes tx_bytes < <(
+  awk '
+    NR > 2 {
+      split($0, parts, ":")
+      interface = parts[1]
+      gsub(/^[[:space:]]+|[[:space:]]+$/, "", interface)
+      if (interface == "lo") next
+
+      count = split(parts[2], counters, /[[:space:]]+/)
+      offset = counters[1] == "" ? 1 : 0
+      rx += counters[1 + offset]
+      tx += counters[9 + offset]
+    }
+    END { printf "%.0f %.0f\n", rx, tx }
+  ' /proc/net/dev
+)
+now_ns=$(date +%s%N)
+
+if [[ -r "$state_file" ]]; then
+  read -r previous_ns previous_rx previous_tx < "$state_file" || true
+else
+  previous_ns=$now_ns
+  previous_rx=$rx_bytes
+  previous_tx=$tx_bytes
+fi
+
+printf '%s %s %s\n' "$now_ns" "$rx_bytes" "$tx_bytes" > "$state_file"
+
+elapsed_ns=$((now_ns - previous_ns))
+if (( elapsed_ns <= 0 || rx_bytes < previous_rx || tx_bytes < previous_tx )); then
+  down_rate=0
+  up_rate=0
+else
+  down_rate=$(((rx_bytes - previous_rx) * 1000000000 / elapsed_ns))
+  up_rate=$(((tx_bytes - previous_tx) * 1000000000 / elapsed_ns))
+fi
+
+down_text=$(format_rate "$down_rate")
+up_text=$(format_rate "$up_rate")
+printf '{"text":"↓ %s  ↑ %s","tooltip":"实时网络速率 · 点击暂停","class":"active"}\n' "$down_text" "$up_text"

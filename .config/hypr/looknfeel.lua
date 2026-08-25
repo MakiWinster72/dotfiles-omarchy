@@ -25,6 +25,14 @@
 --   },
 -- })
 
+-- 启用窗口圆角。
+hl.config({
+  decoration = {
+    rounding = 8,
+    rounding_power = 2.0,
+  },
+})
+
 -- https://wiki.hypr.land/Configuring/Basics/Variables/#animations
 -- hl.config({
 --   animations = {
