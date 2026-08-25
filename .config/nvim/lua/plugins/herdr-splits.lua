@@ -1,7 +1,8 @@
 return {
   {
     "lmilojevicc/herdr-splits.nvim",
-    cond = vim.env.HERDR_ENV == "1",
+    -- 仅在原生 Herdr pane 中启用；嵌套 tmux 时交给 tmux.nvim。
+    cond = vim.env.HERDR_ENV == "1" and vim.env.TMUX == nil,
     event = "VeryLazy",
     opts = {},
     keys = {
