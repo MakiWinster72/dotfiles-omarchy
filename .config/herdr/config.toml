@@ -24,48 +24,6 @@ split_horizontal = "prefix+minus"
 # 垂直分割：Alt+Q → \（新面板出现在右侧）
 split_vertical = "prefix+backslash"
 
-# Ctrl+H/J/K/L 由 herdr-splits 插件在 Neovim split 与 Herdr pane 间无缝导航
-[[keys.command]]
-key = "ctrl+h"
-type = "plugin_action"
-command = "herdr-splits.nav-left"
-
-[[keys.command]]
-key = "ctrl+j"
-type = "plugin_action"
-command = "herdr-splits.nav-down"
-
-[[keys.command]]
-key = "ctrl+k"
-type = "plugin_action"
-command = "herdr-splits.nav-up"
-
-[[keys.command]]
-key = "ctrl+l"
-type = "plugin_action"
-command = "herdr-splits.nav-right"
-
-# Alt+H/J/K/L 在 Neovim split 与 Herdr pane 间无缝调整大小
-[[keys.command]]
-key = "alt+h"
-type = "plugin_action"
-command = "herdr-splits.resize-left"
-
-[[keys.command]]
-key = "alt+j"
-type = "plugin_action"
-command = "herdr-splits.resize-down"
-
-[[keys.command]]
-key = "alt+k"
-type = "plugin_action"
-command = "herdr-splits.resize-up"
-
-[[keys.command]]
-key = "alt+l"
-type = "plugin_action"
-command = "herdr-splits.resize-right"
-
 # 使用 Ctrl+方向键直接向相应方向调整面板大小
 resize_pane_left = "ctrl+left"
 resize_pane_down = "ctrl+down"
@@ -168,8 +126,51 @@ new_tab = "prefix+c"
 # width = "80%"
 # height = "80%"
 
+# 注意：TOML 的数组表必须放在所有普通 [keys] 配置之后。
+# Ctrl+H/J/K/L 在 Neovim split 与 Herdr pane 间无缝导航
+[[keys.command]]
+key = "ctrl+h"
+type = "plugin_action"
+command = "herdr-splits.nav-left"
+
+[[keys.command]]
+key = "ctrl+j"
+type = "plugin_action"
+command = "herdr-splits.nav-down"
+
+[[keys.command]]
+key = "ctrl+k"
+type = "plugin_action"
+command = "herdr-splits.nav-up"
+
+[[keys.command]]
+key = "ctrl+l"
+type = "plugin_action"
+command = "herdr-splits.nav-right"
+
+# Alt+H/J/K/L 在 Neovim split 与 Herdr pane 间无缝调整大小
+[[keys.command]]
+key = "alt+h"
+type = "plugin_action"
+command = "herdr-splits.resize-left"
+
+[[keys.command]]
+key = "alt+j"
+type = "plugin_action"
+command = "herdr-splits.resize-down"
+
+[[keys.command]]
+key = "alt+k"
+type = "plugin_action"
+command = "herdr-splits.resize-up"
+
+[[keys.command]]
+key = "alt+l"
+type = "plugin_action"
+command = "herdr-splits.resize-right"
+
 [theme]
-name = "catppuccin-latte"
+name = "rose-pine"
 auto_switch = false
 
 [ui.toast]

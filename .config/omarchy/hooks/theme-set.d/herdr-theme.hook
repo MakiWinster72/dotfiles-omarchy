@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Omarchy passes the selected theme slug as the first argument.
+omarchy_theme=${1:-}
+if [[ -z "$omarchy_theme" ]]; then
+  theme_name_file="$HOME/.local/state/omarchy/current/theme.name"
+  [[ -r "$theme_name_file" ]] || exit 0
+  omarchy_theme=$(<"$theme_name_file")
+fi
+
+# Normalize display names such as "Tokyo Night" to theme slugs.
+omarchy_theme=${omarchy_theme,,}
+omarchy_theme=${omarchy_theme// /-}
+omarchy_theme=${omarchy_theme//_/-}
+
+case "$omarchy_theme" in
+  catppuccin)
+    herdr_theme="catppuccin"
+    ;;
+  catppuccin-latte | flexoki-light | white)
+    herdr_theme="catppuccin-latte"
+    ;;
+  gruvbox | kanagawa | nord | rose-pine | tokyo-night)
+    herdr_theme="$omarchy_theme"
+    ;;
+  *)
+    # Themes without a native Herdr equivalent use the terminal palette,
+    # which is already updated by Omarchy through Kitty's theme include.
+    herdr_theme="terminal"
+    ;;
+esac
+
+herdr_config="${HERDR_CONFIG_PATH:-$HOME/.config/herdr/config.toml}"
+[[ -f "$herdr_config" ]] || exit 0
+
+HERDR_THEME="$herdr_theme" python - "$herdr_config" <<'PY'
+import os
+import re
+import sys
+from pathlib import Path
+
+config = Path(sys.argv[1])
+text = config.read_text()
+theme = os.environ["HERDR_THEME"]
+section = re.search(r"(?ms)^\[theme\]\n(.*?)(?=^\[|\Z)", text)
+if not section:
+    text = text.rstrip() + f'\n\n[theme]\nname = "{theme}"\nauto_switch = false\n'
+else:
+    body = section.group(1)
+    if re.search(r'(?m)^name\s*=', body):
+        body = re.sub(r'(?m)^name\s*=.*$', f'name = "{theme}"', body, count=1)
+    else:
+        body = f'name = "{theme}"\n' + body
+    text = text[:section.start(1)] + body + text[section.end(1):]
+config.write_text(text)
+PY
+
+if command -v herdr >/dev/null 2>&1; then
+  herdr server reload-config >/dev/null 2>&1 || true
+fi
