@@ -28,8 +28,19 @@
 -- 启用窗口圆角。
 hl.config({
   decoration = {
-    rounding = 8,
+    rounding = 20,
     rounding_power = 2.0,
+
+    active_opacity = 0.90,
+    inactive_opacity = 0.70,
+    fullscreen_opacity = 1.0,
+
+    blur = {
+      enabled = true,
+      size = 3,
+      passes = 2,
+      new_optimizations = true,
+    },
   },
 })
 
@@ -40,6 +51,9 @@ hl.config({
 --     enabled = false,
 --   },
 -- })
+
+-- Omarchy 默认关闭普通工作区切换动画；启用横向滑动切换。
+hl.animation({ leaf = "workspaces", enabled = true, speed = 5, bezier = "easeOutQuint", style = "slide" })
 
 -- https://wiki.hypr.land/Configuring/Basics/Variables/#layout
 -- hl.config({
