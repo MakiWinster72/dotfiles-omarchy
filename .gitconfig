@@ -1,0 +1,19 @@
+; [url "https://gh-proxy.com/https://github.com/"]
+;   insteadOf = https://github.com/
+[user]
+	name = MakiWinster
+	email = makiiiiiiiho@gmail.com
+; [http]
+; 	proxy = http://127.0.0.1:7897
+; [https]
+; 	proxy = http://127.0.0.1:7897
+[core]
+	editor = nvim
+[init]
+	defaultBranch = main
+[credential "https://github.com"]
+	helper =
+	helper = !/home/maki/.local/share/mise/installs/gh/2.98.0/gh_2.98.0_linux_amd64/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper =
+	helper = !/home/maki/.local/share/mise/installs/gh/2.98.0/gh_2.98.0_linux_amd64/bin/gh auth git-credential
