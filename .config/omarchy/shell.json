@@ -1,6 +1,6 @@
 {
   "bar": {
-    "centerAnchor": "omarchy.clock",
+    "centerAnchor": "network-speed",
     "layout": {
       "center": [
         {
@@ -15,19 +15,7 @@
           "onClick": "/home/maki/.config/omarchy/bar/scripts/network-speed-toggle"
         },
         {
-          "format": "dddd HH:mm",
-          "formatAlt": "d MMMM 'W'ww yyyy",
-          "id": "omarchy.clock",
-          "verticalFormat": "HH\n—\nmm"
-        },
-        {
           "id": "omarchy.keyboard-layout"
-        },
-        {
-          "id": "omarchy.weather"
-        },
-        {
-          "id": "omarchy.system-update"
         }
       ],
       "left": [
