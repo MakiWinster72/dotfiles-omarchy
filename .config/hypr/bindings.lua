@@ -32,6 +32,7 @@ o.bind("ALT + SPACE", "Omarchy menu", "omarchy-menu toggle")
 -- SUPER + SHIFT + ALT + A 原功能：打开 Grok 网页应用。
 -- SUPER + F 原功能：真正全屏。
 -- SUPER + SHIFT + F 原功能：打开文件管理器。
+-- SUPER + SHIFT + S 原功能：打开 Google Maps 网页应用。
 -- SUPER + SHIFT + C 原功能：打开 HEY Calendar 网页应用。
 hl.unbind("SUPER + T")
 hl.unbind("SUPER + O")
@@ -48,6 +49,7 @@ hl.unbind("SUPER + SHIFT + D")
 hl.unbind("SUPER + SHIFT + ALT + A")
 hl.unbind("SUPER + F")
 hl.unbind("SUPER + SHIFT + F")
+hl.unbind("SUPER + SHIFT + S")
 hl.unbind("SUPER + SHIFT + C")
 
 o.bind("SUPER + T", "Terminal", { omarchy = "terminal" })
@@ -63,6 +65,8 @@ o.bind("SUPER + F", "最大化窗口", hl.dsp.window.fullscreen({ mode = "maximi
 o.bind("SUPER + SHIFT + F", "全屏窗口", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 o.bind("SUPER + TAB", "切换到上一个工作区", hl.dsp.focus({ workspace = "e-1" }))
 o.bind("SUPER + SHIFT + TAB", "工作区总览", "pkill -SIGUSR1 hyprexpose")
+o.bind("SUPER + SHIFT + S", "截图", "omarchy-capture-screenshot")
+o.bind("SUPER + SHIFT + C", "截图 OCR（英语 + 简体中文）", "OMARCHY_OCR_LANGS=eng+chi_sim omarchy-capture-text")
 
 -- 滚动布局：在相邻列之间吸收或移出当前窗口。
 o.bind("SUPER + BRACKETLEFT", "向左吸收/移出窗口", hl.dsp.layout("consume_or_expel prev"))
