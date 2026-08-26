@@ -134,6 +134,10 @@ o.bind("SUPER + SHIFT + D", "向右移动窗口", move_or_swap_window("r", 50, 0
 o.bind("SUPER + SHIFT + K", "向上移动窗口", move_or_swap_window("u", 0, -50), { repeating = true })
 o.bind("SUPER + SHIFT + J", "向下移动窗口", move_or_swap_window("d", 0, 50), { repeating = true })
 
+-- 名为 running 的专用工作区。
+o.bind("SUPER + R", "切换到 running 工作区", hl.dsp.focus({ workspace = "name:running" }))
+o.bind("SUPER + SHIFT + R", "移动窗口到 running 工作区", hl.dsp.window.move({ workspace = "name:running" }))
+
 -- 将窗口移动到相邻工作区，并跟随窗口切换过去。
 o.bind("SUPER + SHIFT + I", "移动窗口到上一个工作区", hl.dsp.window.move({ workspace = "e-1" }))
 o.bind("SUPER + SHIFT + U", "移动窗口到下一个工作区", hl.dsp.window.move({ workspace = "e+1" }))
