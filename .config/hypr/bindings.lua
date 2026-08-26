@@ -32,6 +32,7 @@ o.bind("ALT + SPACE", "Omarchy menu", "omarchy-menu toggle")
 -- SUPER + SHIFT + ALT + A 原功能：打开 Grok 网页应用。
 -- SUPER + F 原功能：真正全屏。
 -- SUPER + SHIFT + F 原功能：打开文件管理器。
+-- SUPER + SHIFT + C 原功能：打开 HEY Calendar 网页应用。
 hl.unbind("SUPER + T")
 hl.unbind("SUPER + O")
 hl.unbind("SUPER + W")
@@ -47,6 +48,7 @@ hl.unbind("SUPER + SHIFT + D")
 hl.unbind("SUPER + SHIFT + ALT + A")
 hl.unbind("SUPER + F")
 hl.unbind("SUPER + SHIFT + F")
+hl.unbind("SUPER + SHIFT + C")
 
 o.bind("SUPER + T", "Terminal", { omarchy = "terminal" })
 o.bind("SUPER + Q", "Close window", hl.dsp.window.close())
