@@ -26,4 +26,5 @@ require("hypr.autostart")
 require("default.hypr.toggles")
 
 -- Add any other personal Hyprland configuration below.
--- o.window("qemu", { workspace = "5" })
+-- Google Chrome 窗口始终完全不透明（覆盖 Omarchy 的浏览器透明度规则）。
+o.window("^google-chrome$", { tag = "-default-opacity", opacity = "1 override 1 override" })
