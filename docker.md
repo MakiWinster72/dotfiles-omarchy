@@ -9,8 +9,7 @@
 ```json
 {
   "registry-mirrors": [
-    "https://docker.1ms.run",
-    "https://docker.1panel.live"
+    "https://dockerproxy.net"
   ]
 }
 ```
@@ -29,8 +28,7 @@
   ],
   "bip": "172.17.0.1/16",
   "registry-mirrors": [
-    "https://docker.1ms.run",
-    "https://docker.1panel.live"
+    "https://dockerproxy.net"
   ]
 }
 ```
@@ -69,15 +67,18 @@ docker info | grep -A5 'Registry Mirrors'
 
 ```text
 Registry Mirrors:
- https://docker.1ms.run/
- https://docker.1panel.live/
+ https://dockerproxy.net/
 ```
 
 也可以实际拉取镜像测试：
 
 ```bash
-docker pull hello-world
+docker pull mysql:latest
 ```
+
+## 当前验证结果
+
+本机已通过该镜像成功拉取 `mysql:latest`。之前配置的 `docker.1ms.run` 在拉取过程中出现 `Host doesn't match` 警告并长期停滞；`docker.m.daocloud.io` 的认证端点在当前网络中会重置连接，因此不再使用。
 
 ## 排错
 
