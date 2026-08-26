@@ -12,20 +12,27 @@ vim.api.nvim_set_keymap("i", "jj", "<Esc>", { noremap = false })
 local map = vim.keymap.set
 local opts = { noremap = true, silent = true }
 
--- 在 Neovim split 与外层 tmux pane 之间无缝切换。
--- 不依赖插件加载顺序，避免被 LazyVim 默认的 <C-w>h/j/k/l 覆盖。
-local function navigate(direction, tmux_direction)
-  local current_window = vim.api.nvim_get_current_win()
-  vim.cmd("wincmd " .. direction)
-  if vim.api.nvim_get_current_win() == current_window and vim.env.TMUX then
-    vim.fn.system({ "tmux", "select-pane", "-" .. tmux_direction })
+if vim.env.TMUX then
+  -- tmux：先切换 Neovim split，到边缘后切换 tmux pane。
+  local function navigate(direction, tmux_direction)
+    local current_window = vim.api.nvim_get_current_win()
+    vim.cmd("wincmd " .. direction)
+    if vim.api.nvim_get_current_win() == current_window then
+      vim.fn.system({ "tmux", "select-pane", "-" .. tmux_direction })
+    end
   end
-end
 
-map("n", "<C-h>", function() navigate("h", "L") end, opts)
-map("n", "<C-j>", function() navigate("j", "D") end, opts)
-map("n", "<C-k>", function() navigate("k", "U") end, opts)
-map("n", "<C-l>", function() navigate("l", "R") end, opts)
+  map("n", "<C-h>", function() navigate("h", "L") end, opts)
+  map("n", "<C-j>", function() navigate("j", "D") end, opts)
+  map("n", "<C-k>", function() navigate("k", "U") end, opts)
+  map("n", "<C-l>", function() navigate("l", "R") end, opts)
+elseif vim.env.HERDR_ENV == "1" then
+  -- Herdr：显式覆盖 LazyVim 默认映射，避免插件映射被加载顺序覆盖。
+  map("n", "<C-h>", function() require("herdr-splits").move_cursor_left() end, opts)
+  map("n", "<C-j>", function() require("herdr-splits").move_cursor_down() end, opts)
+  map("n", "<C-k>", function() require("herdr-splits").move_cursor_up() end, opts)
+  map("n", "<C-l>", function() require("herdr-splits").move_cursor_right() end, opts)
+end
 -- 启动/继续
 map("n", "<F5>", require("dap").continue, opts)
 -- 暂停/中断
