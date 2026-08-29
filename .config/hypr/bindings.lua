@@ -47,6 +47,10 @@ hl.unbind("SUPER + SHIFT + TAB")
 hl.unbind("SUPER + SHIFT + A")
 hl.unbind("SUPER + SHIFT + D")
 hl.unbind("SUPER + SHIFT + ALT + A")
+hl.unbind("SUPER + LEFT")
+hl.unbind("SUPER + RIGHT")
+hl.unbind("SUPER + UP")
+hl.unbind("SUPER + DOWN")
 hl.unbind("SUPER + F")
 hl.unbind("SUPER + SHIFT + F")
 hl.unbind("SUPER + SHIFT + S")
@@ -112,6 +116,12 @@ o.bind("SUPER + A", "聚焦左侧窗口", hl.dsp.focus({ direction = "l" }))
 o.bind("SUPER + D", "聚焦右侧窗口", hl.dsp.focus({ direction = "r" }))
 o.bind("SUPER + W", "聚焦上方窗口", hl.dsp.focus({ direction = "u" }))
 o.bind("SUPER + S", "聚焦下方窗口", hl.dsp.focus({ direction = "d" }))
+
+-- SUPER + 方向键原功能：聚焦相邻窗口；现改为调整窗口大小。
+o.bind("SUPER + LEFT", "缩小窗口宽度", hl.dsp.window.resize({ x = -50, y = 0, relative = true }), { repeating = true })
+o.bind("SUPER + RIGHT", "增大窗口宽度", hl.dsp.window.resize({ x = 50, y = 0, relative = true }), { repeating = true })
+o.bind("SUPER + UP", "缩小窗口高度", hl.dsp.window.resize({ x = 0, y = -50, relative = true }), { repeating = true })
+o.bind("SUPER + DOWN", "增大窗口高度", hl.dsp.window.resize({ x = 0, y = 50, relative = true }), { repeating = true })
 
 -- 使用 Vim 方向键移动窗口：平铺窗口交换位置，浮动窗口每次移动 50 像素。
 local function move_or_swap_window(direction, x, y)
