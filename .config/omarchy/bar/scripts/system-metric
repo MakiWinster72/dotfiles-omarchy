@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -u
+
+metric=${1:-}
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+state_file="$runtime_dir/omarchy-${metric}-metric.state"
+
+case "$metric" in
+  cpu) label="CPU" ;;
+  ram) label="RAM" ;;
+  gpu) label="GPU" ;;
+  *) exit 1 ;;
+esac
+
+case "$metric" in
+  ram)
+    value=$(awk '
+      /^MemTotal:/ { total = $2 }
+      /^MemAvailable:/ { available = $2 }
+      END { if (total > 0) printf "%.0f", (total - available) * 100 / total; else print 0 }
+    ' /proc/meminfo)
+    detail=$(awk '
+      /^MemTotal:/ { total = $2 }
+      /^MemAvailable:/ { available = $2 }
+      END { printf "%.1f / %.1f GiB", (total - available) / 1048576, total / 1048576 }
+    ' /proc/meminfo)
+    tooltip="内存使用：$detail · 点击暂停"
+    ;;
+
+  cpu)
+    read -r _ user nice system idle iowait irq softirq steal _ < /proc/stat
+    idle_now=$((idle + iowait))
+    total_now=$((user + nice + system + idle + iowait + irq + softirq + steal))
+
+    if [[ -r "$state_file" ]]; then
+      read -r total_previous idle_previous < "$state_file" || true
+    else
+      total_previous=$total_now
+      idle_previous=$idle_now
+    fi
+    printf '%s %s\n' "$total_now" "$idle_now" > "$state_file"
+
+    total_delta=$((total_now - total_previous))
+    idle_delta=$((idle_now - idle_previous))
+    if (( total_delta > 0 )); then
+      value=$(((total_delta - idle_delta) * 100 / total_delta))
+    else
+      value=0
+    fi
+    tooltip="CPU 总使用率 · 点击暂停"
+    ;;
+
+  gpu)
+    value=$(nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits 2>/dev/null | head -n 1 | tr -d ' ')
+    if [[ ! $value =~ ^[0-9]+$ ]]; then
+      value=0
+      tooltip="无法读取 NVIDIA GPU 使用率 · 点击暂停"
+    else
+      tooltip="NVIDIA RTX 4060 GPU 使用率 · 点击暂停"
+    fi
+    ;;
+esac
+
+printf '{"text":"%s %s%%","tooltip":"%s","class":"active"}\n' "$label" "$value" "$tooltip"

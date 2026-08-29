@@ -3,7 +3,6 @@ set -u
 
 runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
 state_file="$runtime_dir/omarchy-network-speed.state"
-pause_file="$runtime_dir/omarchy-network-speed.paused"
 
 format_rate() {
   local bytes_per_second=$1
@@ -17,11 +16,6 @@ format_rate() {
     printf '%d B/s' "$bytes_per_second"
   fi
 }
-
-if [[ -e "$pause_file" ]]; then
-  printf '{"text":"↓ --  ↑ --","tooltip":"网络速率检测已暂停 · 点击继续","class":"paused"}\n'
-  exit 0
-fi
 
 read -r rx_bytes tx_bytes < <(
   awk '

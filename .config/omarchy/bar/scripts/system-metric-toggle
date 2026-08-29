@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -u
+
+metric=${1:-}
+case "$metric" in cpu|ram|gpu) ;; *) exit 1 ;; esac
+
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}"
+pause_file="$runtime_dir/omarchy-${metric}-metric.paused"
+state_file="$runtime_dir/omarchy-${metric}-metric.state"
+
+if [[ -e "$pause_file" ]]; then
+  rm -f "$pause_file" "$state_file"
+else
+  : > "$pause_file"
+fi

@@ -1,21 +1,35 @@
 {
   "bar": {
-    "centerAnchor": "network-speed",
+    "centerAnchor": "",
     "layout": {
       "center": [
         {
-          "id": "omarchy.indicators"
+          "id": "cpu-usage",
+          "type": "qml",
+          "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
+          "label": "CPU",
+          "exec": "/home/maki/.config/omarchy/bar/scripts/system-metric cpu"
+        },
+        {
+          "id": "ram-usage",
+          "type": "qml",
+          "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
+          "label": "RAM",
+          "exec": "/home/maki/.config/omarchy/bar/scripts/system-metric ram"
+        },
+        {
+          "id": "gpu-usage",
+          "type": "qml",
+          "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
+          "label": "GPU",
+          "exec": "/home/maki/.config/omarchy/bar/scripts/system-metric gpu"
         },
         {
           "id": "network-speed",
-          "type": "command",
-          "exec": "/home/maki/.config/omarchy/bar/scripts/network-speed",
-          "interval": 1,
-          "tooltip": "实时网络速率",
-          "onClick": "/home/maki/.config/omarchy/bar/scripts/network-speed-toggle"
-        },
-        {
-          "id": "omarchy.keyboard-layout"
+          "type": "qml",
+          "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
+          "label": "NET",
+          "exec": "/home/maki/.config/omarchy/bar/scripts/network-speed"
         }
       ],
       "left": [
@@ -23,10 +37,16 @@
           "id": "omarchy.menu"
         },
         {
-          "id": "omarchy.workspaces"
+          "id": "maki.workspaces"
+        },
+        {
+          "id": "omarchy.indicators"
         }
       ],
       "right": [
+        {
+          "id": "omarchy.keyboard-layout"
+        },
         {
           "id": "omarchy.tray"
         },
