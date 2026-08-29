@@ -14,3 +14,5 @@ source "$OMARCHY_PATH/default/bash/rc"
 # alias p='python'
 export CLASHCTL_HOME=/home/maki/clashctl
 . $CLASHCTL_HOME/scripts/cmd/clashctl.sh
+
+. "$HOME/.local/bin/env"

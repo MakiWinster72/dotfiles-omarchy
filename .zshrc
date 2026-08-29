@@ -198,3 +198,5 @@ export PATH="$HOME/.jbang/bin:$PATH"
 
 # Pi
 export PATH="/home/maki/.local/share/mise/installs/node/26.7.0/bin:$PATH"
+
+. "$HOME/.local/bin/env"
