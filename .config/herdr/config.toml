@@ -8,6 +8,8 @@ prompt_new_workspace_name = false
 show_agent_labels_on_pane_borders = true
 
 status_indicators = "symbols"
+hide_tab_bar_when_single_tab = true
+sidebar_width = 26
 [keys]
 # Prefix 键：先按 Alt+Q，再按后续功能键
 prefix = "alt+q"
@@ -170,7 +172,7 @@ type = "plugin_action"
 command = "herdr-splits.resize-right"
 
 [theme]
-name = "rose-pine"
+name = "gruvbox"
 auto_switch = false
 
 [ui.toast]

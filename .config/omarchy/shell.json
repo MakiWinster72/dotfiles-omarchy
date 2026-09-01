@@ -40,6 +40,9 @@
           "id": "maki.workspaces"
         },
         {
+          "id": "melonamin.fast"
+        },
+        {
           "id": "omarchy.indicators"
         }
       ],
@@ -51,7 +54,31 @@
           "id": "omarchy.tray"
         },
         {
-          "id": "omarchy.agents"
+          "id": "omarchy.agents",
+          "providers": {
+            "claude": {
+              "enabled": false,
+              "showInBar": false,
+              "barRole": "fixed"
+            },
+            "fireworks": {
+              "enabled": false,
+              "showInBar": false,
+              "barRole": "fixed"
+            },
+            "codex": {
+              "barLabelMode": "iconPercent"
+            }
+          }
+        },
+        {
+          "id": "dev.git"
+        },
+        {
+          "id": "io.github.fabean.herdr"
+        },
+        {
+          "id": "sid.sessions"
         },
         {
           "id": "omarchy.bluetooth"
@@ -66,7 +93,8 @@
           "id": "omarchy.monitor"
         },
         {
-          "id": "omarchy.power"
+          "id": "omarchy.power",
+          "showPercentage": true
         }
       ]
     },
@@ -77,6 +105,10 @@
     "lock": 300,
     "screensaver": 150
   },
-  "plugins": [],
+  "plugins": [
+    {
+      "id": "anagrius.resume"
+    }
+  ],
   "version": 1
 }
