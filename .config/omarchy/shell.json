@@ -40,6 +40,9 @@
           "id": "maki.workspaces"
         },
         {
+          "id": "b.everything"
+        },
+        {
           "id": "melonamin.fast"
         },
         {
@@ -52,6 +55,36 @@
         },
         {
           "id": "omarchy.tray"
+        },
+        {
+          "id": "io.github.twiking.omasettings"
+        },
+        {
+          "id": "io.github.ilyazar.syncthing"
+        },
+        {
+          "id": "jankeesvw.herdr"
+        },
+        {
+          "id": "agx.screen-time"
+        },
+        {
+          "id": "furmware.cloud"
+        },
+        {
+          "id": "omamail"
+        },
+        {
+          "id": "io.github.thisisgm.omapods"
+        },
+        {
+          "id": "sid.sessions"
+        },
+        {
+          "id": "dev.git"
+        },
+        {
+          "id": "mryll.codexbar"
         },
         {
           "id": "omarchy.agents",
@@ -72,15 +105,6 @@
           }
         },
         {
-          "id": "dev.git"
-        },
-        {
-          "id": "io.github.fabean.herdr"
-        },
-        {
-          "id": "sid.sessions"
-        },
-        {
           "id": "omarchy.bluetooth"
         },
         {
@@ -88,6 +112,9 @@
         },
         {
           "id": "omarchy.audio"
+        },
+        {
+          "id": "crmne.hyprmoncfg"
         },
         {
           "id": "omarchy.monitor"
@@ -108,6 +135,9 @@
   "plugins": [
     {
       "id": "anagrius.resume"
+    },
+    {
+      "id": "mirador"
     }
   ],
   "version": 1
