@@ -28,3 +28,11 @@ require("default.hypr.toggles")
 -- Add any other personal Hyprland configuration below.
 -- Google Chrome 窗口始终完全不透明（覆盖 Omarchy 的浏览器透明度规则）。
 o.window("^google-chrome$", { tag = "-default-opacity", opacity = "1 override 1 override" })
+
+-- Load settings written by OmaSettings (omasettings:managed).
+require("hypr.omasettings")
+
+-- [key-visualizer] capture hook (managed by the plugin; safe to remove)
+local kc_path = os.getenv("HOME") .. "/.config/omarchy/plugins/felixzsh.key-visualizer/key-visualizer.lua"
+local kc_file = io.open(kc_path, "r")
+if kc_file then kc_file:close(); dofile(kc_path) end

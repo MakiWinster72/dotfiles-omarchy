@@ -24,12 +24,13 @@ hl.monitor({
 -- NOTE: 我的显示器
 hl.monitor({
   output = "HDMI-A-1",
-  mode = "1920x1080@60",
+  mode = "1920x1080@75.34",
   position = "1920x0",
   scale = 1,
 })
 
 -- NOTE: 培训室显示器
+--
 -- hl.monitor({
 --   output = "HDMI-A-1",
 --   mode = "3840x2160@30",
