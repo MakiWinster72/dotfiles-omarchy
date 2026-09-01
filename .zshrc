@@ -31,6 +31,7 @@ alias yaz='yazi'
 alias yazi='yazi'
 alias yaci='yazi'
 alias h='herdr'
+alias pir='pi -r'
 
 alias -g NE='2>/dev/null'
 alias -g DE='>/dev/null'
@@ -165,8 +166,9 @@ mount_aliyun() {
 		fi
 	fi
 
-	# 尝试进入挂载点
-	cd "$MOUNT_POINT" 2>/dev/null || true
+	if mountpoint -q "$MOUNT_POINT"; then
+		echo "挂载位置：$MOUNT_POINT"
+	fi
 }
 
 alias sa='ssh -p 64701 maki@frp.makis-life.cn'
