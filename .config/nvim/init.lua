@@ -13,7 +13,7 @@ end
 require("config.lazy")
 
 -- NOTE: 通用 GUI 字体
-vim.o.guifont = "Hurmit Nerd Font:h12"
+vim.o.guifont = "0xProto Nerd Font Mono:h12"
 
 -- 普通复制/粘贴默认使用系统剪贴板；Neovide 在 Wayland 下会通过 wl-clipboard 写入它。
 vim.opt.clipboard = "unnamedplus"
