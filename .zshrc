@@ -32,6 +32,7 @@ alias yazi='yazi'
 alias yaci='yazi'
 alias h='herdr'
 alias pir='pi -r'
+alias ff='fzf'
 
 alias -g NE='2>/dev/null'
 alias -g DE='>/dev/null'
@@ -124,6 +125,19 @@ dkst() {
 			sudo systemctl stop docker.service 2>/dev/null || true
 		echo "Docker 服务已停止"
 	fi
+}
+
+td() {
+	if ! command -v tailscale >/dev/null 2>&1; then
+		echo "Tailscale 未安装"
+		return 1
+	fi
+
+	if systemctl is-active --quiet tailscaled.service; then
+		sudo tailscale down || true
+	fi
+	sudo systemctl stop tailscaled.service
+	echo "Tailscale 已断开，服务 tailscaled 已停止"
 }
 
 # NOTE: clone

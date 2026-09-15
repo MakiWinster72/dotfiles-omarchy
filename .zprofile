@@ -34,6 +34,10 @@ export HTTP_PROXY="http://127.0.0.1:7890"
 export HTTPS_PROXY="http://127.0.0.1:7890"
 export ALL_PROXY="http://127.0.0.1:7890"
 
+export http_proxy="http://127.0.0.1:7890"
+export https_proxy="http://127.0.0.1:7890"
+export all_proxy="http://127.0.0.1:7890"
+
 export PATH="$HOME/.npm-global/bin:$PATH"
 # 先清理 man 的 ANSI 控制码，再交给 bat 渲染，避免出现 1m/4m 等原始转义文本。
 export MANOPT='-L zh_CN'
