@@ -17,6 +17,9 @@
 hl.unbind("SUPER + SPACE")
 o.bind("ALT + SPACE", "Omarchy menu", "omarchy-menu toggle")
 
+-- Windows 风格的 Alt+Tab 窗口切换器。
+dofile(os.getenv("HOME") .. "/.config/omarchy/plugins/io.github.pablo-merino.altswitch/altswitch.lua")
+
 -- Niri 风格的应用快捷键。
 -- SUPER + T 原功能：切换窗口浮动/平铺。
 -- SUPER + O 原功能：弹出并固定窗口。
@@ -79,6 +82,7 @@ o.bind("SUPER + F", "最大化窗口", hl.dsp.window.fullscreen({ mode = "maximi
 o.bind("SUPER + SHIFT + F", "全屏窗口", hl.dsp.window.fullscreen({ mode = "fullscreen" }))
 o.bind("SUPER + TAB", "工作区总览", "omarchy-shell shell toggle mirador '{}'")
 o.bind("SUPER + SHIFT + TAB", "切换到上一个工作区", hl.dsp.focus({ workspace = "e-1" }))
+o.bind("ALT + GRAVE", "切换 Alt-Tab 工作区范围", "omarchy-shell altswitch scope toggle")
 
 -- 鼠标侧键：本机按钮 4 对应 mouse:276，按钮 5 对应 mouse:275。
 hl.unbind("mouse:275")
@@ -93,6 +97,14 @@ o.bind("SUPER + SHIFT + S", "截图", "omarchy-capture-screenshot")
 o.bind("SUPER + SHIFT + C", "百度高精度截图 OCR", "omarchy-capture-text-baidu")
 o.bind("SUPER + N", "显示/隐藏 Scratchpad", hl.dsp.workspace.toggle_special("scratchpad"))
 o.bind("SUPER + SHIFT + N", "移动窗口到 Scratchpad", hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
+o.bind("SUPER + SHIFT + CTRL + N", "移动当前工作区全部窗口到 Scratchpad", "$HOME/.config/hypr/scripts/move-workspace-windows special:scratchpad")
+
+-- 将当前工作区的全部窗口移动到编号工作区。
+for workspace = 1, 9 do
+  local key = "code:" .. tostring(workspace + 9)
+  o.bind("SUPER + SHIFT + CTRL + " .. key, "移动当前工作区全部窗口到工作区 " .. workspace,
+    "$HOME/.config/hypr/scripts/move-workspace-windows " .. workspace)
+end
 
 -- 滚动布局：在相邻列之间吸收或移出当前窗口。
 o.bind("SUPER + BRACKETLEFT", "向左吸收/移出窗口", hl.dsp.layout("consume_or_expel prev"))
@@ -130,6 +142,10 @@ hl.unbind("SUPER + CTRL + D")
 hl.unbind("SUPER + CTRL + H")
 hl.unbind("SUPER + CTRL + K")
 hl.unbind("SUPER + CTRL + L")
+hl.unbind("SUPER + CTRL + LEFT")
+hl.unbind("SUPER + CTRL + RIGHT")
+hl.unbind("SUPER + CTRL + UP")
+hl.unbind("SUPER + CTRL + DOWN")
 
 -- 聚焦相邻窗口；SUPER + 方向键保留 Omarchy 已有的相同功能。
 o.bind("SUPER + H", "聚焦左侧窗口", hl.dsp.focus({ direction = "l" }))
@@ -214,6 +230,12 @@ o.bind("SUPER + SHIFT + CTRL + H", "移动窗口到左侧显示器", hl.dsp.wind
 o.bind("SUPER + SHIFT + CTRL + L", "移动窗口到右侧显示器", hl.dsp.window.move({ monitor = "r" }))
 o.bind("SUPER + SHIFT + CTRL + K", "移动窗口到上方显示器", hl.dsp.window.move({ monitor = "u" }))
 o.bind("SUPER + SHIFT + CTRL + J", "移动窗口到下方显示器", hl.dsp.window.move({ monitor = "d" }))
+
+-- SUPER + CTRL + 左/右原功能：切换分组窗口焦点；现改为移动整个工作区。
+o.bind("SUPER + CTRL + LEFT", "移动工作区到左侧显示器", hl.dsp.workspace.move({ monitor = "l" }))
+o.bind("SUPER + CTRL + RIGHT", "移动工作区到右侧显示器", hl.dsp.workspace.move({ monitor = "r" }))
+o.bind("SUPER + CTRL + UP", "移动工作区到上方显示器", hl.dsp.workspace.move({ monitor = "u" }))
+o.bind("SUPER + CTRL + DOWN", "移动工作区到下方显示器", hl.dsp.workspace.move({ monitor = "d" }))
 
 -- 按住 SUPER 转动键盘音量滚轮，调节屏幕亮度。
 o.bind("SUPER + XF86AudioRaiseVolume", "提高屏幕亮度", "omarchy-brightness-display +10%", { locked = true, repeating = true })
