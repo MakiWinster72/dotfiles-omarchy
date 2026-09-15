@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+operation=${1:-get}
+metric=${2:-}
+case "$metric" in
+  cpu-usage | ram-usage | gpu-usage | network-speed) ;;
+  *) exit 2 ;;
+esac
+
+state_dir="${XDG_STATE_HOME:-$HOME/.local/state}/omarchy"
+state_file="$state_dir/bar-metrics.json"
+lock_file="$state_dir/bar-metrics.lock"
+mkdir -p "$state_dir"
+
+exec 9>"$lock_file"
+flock 9
+
+if [[ ! -s "$state_file" ]] || ! jq -e 'type == "object"' "$state_file" >/dev/null 2>&1; then
+  printf '{"cpu-usage":false,"ram-usage":false,"gpu-usage":false,"network-speed":false}\n' > "$state_file"
+fi
+
+case "$operation" in
+  get)
+    jq -r --arg metric "$metric" '.[$metric] // false' "$state_file"
+    ;;
+  toggle)
+    tmp=$(mktemp "$state_dir/.bar-metrics.XXXXXX")
+    trap 'rm -f "$tmp"' EXIT
+    jq --arg metric "$metric" '.[$metric] = ((.[$metric] // false) | not)' "$state_file" > "$tmp"
+    cat "$tmp" > "$state_file"
+    jq -r --arg metric "$metric" '.[$metric]' "$state_file"
+    ;;
+  *)
+    exit 2
+    ;;
+esac

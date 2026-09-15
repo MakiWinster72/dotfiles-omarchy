@@ -8,6 +8,7 @@
           "type": "qml",
           "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
           "label": "CPU",
+          "stateKey": "cpu-usage",
           "exec": "/home/maki/.config/omarchy/bar/scripts/system-metric cpu"
         },
         {
@@ -15,6 +16,7 @@
           "type": "qml",
           "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
           "label": "RAM",
+          "stateKey": "ram-usage",
           "exec": "/home/maki/.config/omarchy/bar/scripts/system-metric ram"
         },
         {
@@ -22,6 +24,7 @@
           "type": "qml",
           "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
           "label": "GPU",
+          "stateKey": "gpu-usage",
           "exec": "/home/maki/.config/omarchy/bar/scripts/system-metric gpu"
         },
         {
@@ -29,6 +32,7 @@
           "type": "qml",
           "source": "/home/maki/.config/omarchy/bar/modules/toggle-metric.qml",
           "label": "NET",
+          "stateKey": "network-speed",
           "exec": "/home/maki/.config/omarchy/bar/scripts/network-speed"
         }
       ],

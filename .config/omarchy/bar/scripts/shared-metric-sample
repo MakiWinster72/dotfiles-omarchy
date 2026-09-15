@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+metric=${1:-}
+command_line=${2:-}
+case "$metric" in
+  cpu-usage | ram-usage | gpu-usage | network-speed) ;;
+  *) exit 2 ;;
+esac
+[[ -n "$command_line" ]] || exit 2
+
+runtime_dir="${XDG_RUNTIME_DIR:-/tmp}/omarchy-bar-metrics"
+cache_file="$runtime_dir/$metric.json"
+time_file="$runtime_dir/$metric.timestamp"
+lock_file="$runtime_dir/$metric.lock"
+mkdir -p "$runtime_dir"
+
+exec 9>"$lock_file"
+flock 9
+
+now_ms=$(date +%s%3N)
+last_ms=0
+[[ -r "$time_file" ]] && read -r last_ms < "$time_file" || true
+
+# Both monitor bars refresh once per second. Reuse a recent sample so concurrent
+# instances display the exact same value and do not race on CPU/network counters.
+if [[ -s "$cache_file" ]] && (( now_ms - last_ms < 900 )); then
+  cat "$cache_file"
+  exit 0
+fi
+
+output=$(bash -lc "$command_line")
+printf '%s\n' "$output" > "$cache_file"
+printf '%s\n' "$now_ms" > "$time_file"
+printf '%s\n' "$output"
