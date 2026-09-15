@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+destination=${1:?Usage: move-workspace-windows <workspace>}
+workspace_id=$(hyprctl activeworkspace -j | jq -r '.id')
+
+mapfile -t windows < <(
+  hyprctl clients -j | jq -r --argjson workspace_id "$workspace_id" \
+    '.[] | select(.workspace.id == $workspace_id) | .address'
+)
+
+for address in "${windows[@]}"; do
+  hyprctl dispatch movetoworkspacesilent "$destination,address:$address" >/dev/null
+done
