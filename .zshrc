@@ -3,6 +3,8 @@
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="${EDITOR:-nvim}"
 export VISUAL="$EDITOR"
+export SUDO_EDITOR=nvim
+alias se='sudoedit'
 umask 022
 
 # NOTE: 自定义命令
