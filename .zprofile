@@ -9,7 +9,8 @@ export XMODIFIERS=@im=fcitx
 export INPUT_METHOD=fcitx
 export SDL_IM_MODULE=fcitx
 export GLFW_IM_MODULE=ibus
-export NO_PROXY=maki,localhost,master,192.168.1.0/24,172.20.10.0/28,registry.npmmirror.com
+export NO_PROXY=maki,localhost,127.0.0.1,master,192.168.1.0/24,192.168.122.0/24,172.20.10.0/28,registry.npmmirror.com
+export no_proxy="$NO_PROXY"
 
 # Proxy rust
 export RUSTUP_UPDATE_ROOT=https://mirrors.aliyun.com/rustup/rustup
@@ -25,15 +26,16 @@ export PATH="$HOME/go/bin:$PATH"
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && . "$NVM_DIR/bash_completion"
+export NODE_USE_ENV_PROXY=1
 
 export EDITOR="nvim"
 export FREERDP_COMMAND="xfreerdp3"
 export BROWSER="/usr/bin/google-chrome-stable"
 # XDG_MENU_PREFIX=arch- kbuildsycoca6
+
 export HTTP_PROXY="http://127.0.0.1:7890"
 export HTTPS_PROXY="http://127.0.0.1:7890"
 export ALL_PROXY="http://127.0.0.1:7890"
-
 export http_proxy="http://127.0.0.1:7890"
 export https_proxy="http://127.0.0.1:7890"
 export all_proxy="http://127.0.0.1:7890"
