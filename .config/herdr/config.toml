@@ -10,6 +10,11 @@ show_agent_labels_on_pane_borders = true
 status_indicators = "symbols"
 hide_tab_bar_when_single_tab = true
 sidebar_width = 26
+
+# Agents 面板显示 Pi 的终端标题；会话标题扩展会将其同步为 /name 会话名
+[ui.sidebar.agents]
+rows = [["state_icon", "terminal_title_stripped"]]
+
 [keys]
 # Prefix 键：先按 Alt+Q，再按后续功能键
 prefix = "alt+q"
@@ -39,6 +44,12 @@ next_tab = "ctrl+d"
 # 使用 Alt+A/D 切换上一个/下一个 Space
 previous_workspace = "alt+a"
 next_workspace = "alt+d"
+
+# Prefix 模式中使用 H/J/K/L 按方向聚焦 Pane：Alt+Q 后再按方向键
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
 
 # 以下为未自定义的 Herdr 快捷键参考；注释后继续使用程序默认值
 
@@ -172,7 +183,7 @@ type = "plugin_action"
 command = "herdr-splits.resize-right"
 
 [theme]
-name = "gruvbox"
+name = "terminal"
 auto_switch = false
 
 [ui.toast]
