@@ -18,7 +18,7 @@ hl.unbind("SUPER + SPACE")
 o.bind("ALT + SPACE", "Omarchy menu", "omarchy-menu toggle")
 
 -- Windows 风格的 Alt+Tab 窗口切换器。
-dofile(os.getenv("HOME") .. "/.config/omarchy/plugins/io.github.pablo-merino.altswitch/altswitch.lua")
+dofile(os.getenv("HOME") .. "/.config/omarchy/plugins/io.github.makiwinster72.altswitch/altswitch.lua")
 
 -- Niri 风格的应用快捷键。
 -- SUPER + T 原功能：切换窗口浮动/平铺。
@@ -97,7 +97,8 @@ o.bind("SUPER + SHIFT + S", "截图", "omarchy-capture-screenshot")
 o.bind("SUPER + SHIFT + C", "百度高精度截图 OCR", "omarchy-capture-text-baidu")
 o.bind("SUPER + N", "显示/隐藏 Scratchpad", hl.dsp.workspace.toggle_special("scratchpad"))
 o.bind("SUPER + SHIFT + N", "移动窗口到 Scratchpad", hl.dsp.window.move({ workspace = "special:scratchpad", follow = false }))
-o.bind("SUPER + SHIFT + CTRL + N", "移动当前工作区全部窗口到 Scratchpad", "$HOME/.config/hypr/scripts/move-workspace-windows special:scratchpad")
+o.bind("SUPER + SHIFT + CTRL + N", "移动当前工作区全部窗口到 Scratchpad",
+  "$HOME/.config/hypr/scripts/move-workspace-windows special:scratchpad")
 
 -- 将当前工作区的全部窗口移动到编号工作区。
 for workspace = 1, 9 do
@@ -112,7 +113,7 @@ o.bind("SUPER + BRACKETRIGHT", "向右吸收/移出窗口", hl.dsp.layout("consu
 
 o.bind("SUPER + X", "剪贴板管理器", "omarchy-shell shell toggle omarchy.clipboard")
 o.bind("SUPER + SHIFT + V", "剪贴板管理器", "omarchy-shell shell toggle omarchy.clipboard")
-o.bind("SUPER + ALT + H", "打开 Herdr 面板", "omarchy-shell shell toggle jankeesvw.herdr")
+o.bind("SUPER + ALT + H", "打开 Herdr 面板", "omarchy-shell shell toggle io.github.fabean.herdr")
 o.bind("SUPER + SHIFT + O", "恢复 AI 会话", "omarchy-shell shell toggle anagrius.resume")
 o.bind("SUPER + G", "切换浮动/平铺", hl.dsp.window.float({ action = "toggle" }))
 o.bind("SUPER + SHIFT + G", "切换浮动/平铺窗口焦点", function()
@@ -179,14 +180,16 @@ end
 
 o.bind("SUPER + SHIFT + H", "向左移动窗口", move_or_swap_window("l", -50, 0), { repeating = true })
 o.bind("SUPER + SHIFT + A", "向左移动窗口", move_or_swap_window("l", -50, 0), { repeating = true })
-o.bind("SUPER + SHIFT + L", "向右移动窗口", move_or_swap_window("r", 50, 0), { repeating = true })
+-- SUPER + SHIFT + L 原功能：向右移动窗口（仍可使用 SUPER + SHIFT + D）。
+-- 临时屏蔽键盘输入；仅 SUPER + CTRL + L 可以退出该子映射。
+o.bind("SUPER + SHIFT + L", "临时锁定键盘", hl.dsp.submap("keyboard-locked"))
+hl.define_submap("keyboard-locked", function()
+  o.bind("SUPER + CTRL + L", "解锁键盘", hl.dsp.submap("reset"))
+  hl.bind("catchall", hl.dsp.exec_cmd("true"))
+end)
 o.bind("SUPER + SHIFT + D", "向右移动窗口", move_or_swap_window("r", 50, 0), { repeating = true })
 o.bind("SUPER + SHIFT + K", "向上移动窗口", move_or_swap_window("u", 0, -50), { repeating = true })
 o.bind("SUPER + SHIFT + J", "向下移动窗口", move_or_swap_window("d", 0, 50), { repeating = true })
-
--- 名为 running 的专用工作区。
-o.bind("SUPER + R", "切换到 running 工作区", hl.dsp.focus({ workspace = "name:running" }))
-o.bind("SUPER + SHIFT + R", "移动窗口到 running 工作区", hl.dsp.window.move({ workspace = "name:running" }))
 
 -- 将窗口移动到相邻工作区，并跟随窗口切换过去。
 o.bind("SUPER + SHIFT + I", "移动窗口到上一个工作区", hl.dsp.window.move({ workspace = "e-1" }))
@@ -221,7 +224,7 @@ o.bind("SUPER + SHIFT + DOWN", "聚焦下方显示器", hl.dsp.focus({ monitor =
 o.bind("SUPER + CTRL + A", "聚焦左侧显示器", hl.dsp.focus({ monitor = "l" }))
 o.bind("SUPER + CTRL + H", "聚焦左侧显示器", hl.dsp.focus({ monitor = "l" }))
 o.bind("SUPER + CTRL + D", "聚焦右侧显示器", hl.dsp.focus({ monitor = "r" }))
-o.bind("SUPER + CTRL + L", "聚焦右侧显示器", hl.dsp.focus({ monitor = "r" }))
+-- SUPER + CTRL + L 原功能：聚焦右侧显示器（仍可使用 SUPER + CTRL + D）。
 o.bind("SUPER + CTRL + K", "聚焦上方显示器", hl.dsp.focus({ monitor = "u" }))
 o.bind("SUPER + CTRL + J", "聚焦下方显示器", hl.dsp.focus({ monitor = "d" }))
 
