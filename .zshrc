@@ -15,23 +15,13 @@ alias ipa='ip addr show | grep -E "192|172"'
 alias li="gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'"
 alias dk="gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'"
 alias web='browser-sync start --server --files "**/*.*"'
-alias oc='opencode'
 alias cc='cc-switch'
-alias cl='claude --resume'
 alias ncim='nvim'
 alias nbim='nvim'
 alias e='exit'
-alias s='spf'
-alias c='c3270 172.19.227.253:23'
 alias a='lazygit'
-alias t='tmux'
-alias m='tmux a -t mobile'
-alias n='sudo bandwhich'
 alias y='yazi'
-alias ya='yazi'
-alias yaz='yazi'
 alias yazi='yazi'
-alias yaci='yazi'
 alias h='herdr'
 alias pir='pi -r'
 alias ff='fzf'
@@ -71,7 +61,11 @@ fi
 
 eval "$(zoxide init --cmd cd zsh)"
 
-if command -v lsd >/dev/null 2>&1; then
+if command -v nls >/dev/null 2>&1; then
+	alias ls='nls'
+	alias ll='nls -l'
+	alias la='nls -la'
+elif command -v lsd >/dev/null 2>&1; then
 	alias ls='lsd --group-dirs=first --icon=always'
 	alias ll='lsd -lh --group-dirs=first --icon=always'
 	alias la='lsd -lha --group-dirs=first --icon=always'
@@ -123,38 +117,25 @@ dkst() {
 		docker stop $running 2>/dev/null || true
 	fi
 	if command -v systemctl >/dev/null 2>&1; then
-		sudo systemctl stop docker.service containerd.service 2>/dev/null ||
-			sudo systemctl stop docker.service 2>/dev/null || true
+		sudo systemctl stop docker.socket docker.service containerd.service 2>/dev/null ||
+			sudo systemctl stop docker.socket docker.service 2>/dev/null || true
 		echo "Docker 服务已停止"
 	fi
-}
-
-td() {
-	if ! command -v tailscale >/dev/null 2>&1; then
-		echo "Tailscale 未安装"
-		return 1
-	fi
-
-	if systemctl is-active --quiet tailscaled.service; then
-		sudo tailscale down || true
-	fi
-	sudo systemctl stop tailscaled.service
-	echo "Tailscale 已断开，服务 tailscaled 已停止"
 }
 
 # NOTE: clone
 # 挂载命令
 alias makislife='mount_aliyun "Aliyun" "makislife" "makislife"'
-alias img_makislife='mount_aliyun "Aliyun" "aly-images472" "img-makislife"'
-alias resources='mount_aliyun "Aliyun" "res-guangzhou" "resources"'
 
 mount_aliyun() {
 	local CONFIG_NAME="$1"
 	local BUCKET="$2"
 	local MOUNT_SUBDIR="$3"
-	local MOUNT_POINT="$HOME/Documents/aliy/${MOUNT_SUBDIR}"
+	local MOUNT_POINT="/mnt/aliy/${MOUNT_SUBDIR}"
 
-	mkdir -p "$MOUNT_POINT"
+	if [ ! -d "$MOUNT_POINT" ]; then
+		sudo install -d -o "$(id -u)" -g "$(id -g)" "$MOUNT_POINT" || return 1
+	fi
 
 	if mountpoint -q "$MOUNT_POINT"; then
 		echo "目录已挂载: $MOUNT_POINT"
@@ -218,3 +199,6 @@ export PATH="$HOME/.jbang/bin:$PATH"
 export PATH="/home/maki/.local/share/mise/installs/node/26.7.0/bin:$PATH"
 
 . "$HOME/.local/bin/env"
+source /home/maki/.local/share/leaf/completions/_leaf
+export CLASHCTL_HOME=/home/maki/clashctl
+. $CLASHCTL_HOME/scripts/cmd/clashctl.sh
