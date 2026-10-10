@@ -13,3 +13,5 @@ source "$OMARCHY_PATH/default/bash/rc"
 # Make an alias for invoking commands you use constantly
 # alias p='python'
 . "$HOME/.local/bin/env"
+export CLASHCTL_HOME=/home/maki/clashctl
+. $CLASHCTL_HOME/scripts/cmd/clashctl.sh
