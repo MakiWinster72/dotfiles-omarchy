@@ -24,7 +24,7 @@ last_ms=0
 
 # Both monitor bars refresh once per second. Reuse a recent sample so concurrent
 # instances display the exact same value and do not race on CPU/network counters.
-if [[ -s "$cache_file" ]] && (( now_ms - last_ms < 900 )); then
+if [[ -s "$cache_file" ]] && (( now_ms >= last_ms && now_ms - last_ms < 900 )); then
   cat "$cache_file"
   exit 0
 fi

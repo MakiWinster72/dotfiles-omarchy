@@ -183,7 +183,7 @@ type = "plugin_action"
 command = "herdr-splits.resize-right"
 
 [theme]
-name = "terminal"
+name = "catppuccin"
 auto_switch = false
 
 [ui.toast]
