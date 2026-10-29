@@ -1,7 +1,7 @@
 # cowsay 你好
 # 环境检测与基础设置
 export ZSH="$HOME/.oh-my-zsh"
-export EDITOR="${EDITOR:-nvim}"
+export EDITOR=nvim
 export VISUAL="$EDITOR"
 export SUDO_EDITOR=nvim
 alias se='sudoedit'
@@ -202,3 +202,7 @@ export PATH="/home/maki/.local/share/mise/installs/node/26.7.0/bin:$PATH"
 source /home/maki/.local/share/leaf/completions/_leaf
 export CLASHCTL_HOME=/home/maki/clashctl
 . $CLASHCTL_HOME/scripts/cmd/clashctl.sh
+
+# >>> Codex installer >>>
+export PATH="/home/maki/.local/bin:$PATH"
+# <<< Codex installer <<<
