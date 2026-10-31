@@ -1,0 +1,21 @@
+#!/bin/sh
+# Control only the laptop's built-in keyboard in the current Hyprland session.
+set -eu
+case "${1:-}" in
+    off|disable) enabled=false; message='内置键盘已禁用' ;;
+    on|enable) enabled=true; message='内置键盘已恢复' ;;
+    *) printf '用法：internal-keyboard off  禁用内置键盘\n      internal-keyboard on   恢复内置键盘\n'; exit 0 ;;
+esac
+if [ -z "${HYPRLAND_INSTANCE_SIGNATURE:-}" ]; then
+    printf '%s\n' '错误：请在当前 Hyprland 桌面的终端中运行。' >&2
+    exit 1
+fi
+result=$(hyprctl eval "hl.device({ name = \"at-translated-set-2-keyboard\", enabled = $enabled })")
+if [ "$result" != 'ok' ]; then
+    printf '设置失败：%s\n' "$result" >&2
+    exit 1
+fi
+printf '%s\n' "$message"
+if command -v notify-send >/dev/null 2>&1; then
+    notify-send '内置键盘' "$message" || :
+fi
